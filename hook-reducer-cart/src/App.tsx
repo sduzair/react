@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import styles from "./App.module.css";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -7,8 +8,8 @@ function App() {
   useEffect(() => {
     fetch("https://dummyjson.com/products")
       .then<ProductsWithPagination>((res) => res.json())
-      .then((productsWithPagination) => {
-        setProducts(productsWithPagination.products);
+      .then((productsWithMetadata) => {
+        setProducts(productsWithMetadata.products);
       });
   }, []);
 
@@ -18,7 +19,7 @@ function App() {
         <div className="row row-cols-1 row-cols-md-3 g-4">
           {products.map((product) => (
             <div key={product.id} className="col">
-              <div className="card h-100">
+              <div className={`card h-100 ${styles["card"]}`}>
                 <img
                   src={product.thumbnail}
                   className="card-img-top"

@@ -1,3 +1,20 @@
-.app-italic {
-  font-style: italic;
+/* .card:hover::after {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  box-sizing: unset;
+  border: red;
+  border-style: solid;
+} */
+
+.card {
+  &:hover {
+    box-sizing: unset;
+    /* You can also add other hover effects here */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--my-color-200);
+  }
 }
