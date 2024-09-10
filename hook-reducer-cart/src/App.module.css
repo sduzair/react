@@ -1,3 +1,23 @@
-.app-italic {
-  font-style: italic;
+.card {
+  &::after {
+    position: absolute;
+    top: calc(-1 * var(--bs-card-border-width));
+    right: calc(-1 * var(--bs-card-border-width));
+    bottom: calc(-1 * var(--bs-card-border-width));
+    left: calc(-1 * var(--bs-card-border-width));
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 0.15s ease-in-out;
+    box-sizing: unset;
+    box-shadow: var(--bs-box-shadow);
+    border: var(--bs-card-border-width) solid var(--bs-card-border-color);
+    border-radius: calc(
+      var(--bs-card-border-radius) + var(--bs-card-border-width)
+    );
+    pointer-events: none;
+    content: "";
+  }
+  &:hover::after {
+    opacity: 1;
+  }
 }
