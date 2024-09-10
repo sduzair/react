@@ -22,8 +22,8 @@ To enhance your React development experience in Visual Studio Code, instal the f
    1. Ease of life feature
 5. CSS Nesting Syntax Highlighting (jacobcassidy.css-nesting-syntax-highlighting)
    1. The native CSS language server does not syntax highlight modern CSS nesting.
-6. CSS Variables (vunguyentuan.vscode-css-variables)
-   1. To make CSS variables available in workspace available in html-like files
+6. For CSS variables, use CSS Variable Autocomplete (vunguyentuan.vscode-css-variables) or CSS Var Complete (willofindie.vscode-cssvar)
+   1. To make CSS variable intellisense possible with CSS variables available in workspace
 7. CSS Class Intellisense (tarrow.css-class-intellisense)
    1. Intellisense for CSS styles available in workspace
    2. See below table for comparison with other similar css styles extensions.
@@ -32,6 +32,7 @@ To enhance your React development experience in Visual Studio Code, instal the f
 
 | Extension                                | Official VSCode Name                         | Parses Modern CSS | Go to Definition | Peek | Autocomplete in Template Literals | Comments                                                                                   |
 | ---------------------------------------- | -------------------------------------------- | :---------------: | :--------------: | :--: | :-------------------------------: | ------------------------------------------------------------------------------------------ |
+| HTML CSS Support                         | `ecmel.vscode-html-css`                      |        ✅         |        ✅        |  ❌  |                ❌                 | Parses modern CSS, configures lint rules, but lacks peek functionality and autocomplete in template literals      |
 | CSS Class Intellisense                   | `tarrow.css-class-intellisense`              |        ✅         |        ✅        |  ❌  |                ❌                 | Parses modern CSS, but lacks peek functionality and autocomplete in template literals      |
 | CSS Navigation                           | `pucelle.vscode-css-navigation`              |        ❌         |        ✅        |  ✅  |                ✅                 | Does not parse modern CSS, but offers peek and autocomplete in template literals           |
 | HTML-Slim-SCSS-CSS Class Completion      | `gencer.html-slim-scss-css-class-completion` |        ✅         |        ❌        |  ❌  |                ❌                 | Parses modern CSS, but lacks go to definition, peek, and autocomplete in template literals |
