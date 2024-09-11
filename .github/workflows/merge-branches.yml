@@ -34,16 +34,34 @@ jobs:
           $currentBranch = git rev-parse --abbrev-ref HEAD
           Write-Host "Current branch: $currentBranch"
           Write-Host "Checkout into master..."
-          Write-Host "Current branch: master"
           git checkout master
-          Write-Host "Debug: Available remote branches:"
-          git branch -r
-          Write-Host "Debug: Will run git merge on master merging other remote branches"
+          Write-Host "Current branch: master"
+          git fetch origin
+
           git branch -r | Where-Object { $_ -notmatch 'origin/HEAD' -and $_ -notmatch "origin/master" } | ForEach-Object {
             $remoteBranch = $_.Trim()
-            Write-Host "Merging remote branch: $remoteBranch"
-            git merge --no-edit $remoteBranch
+            Write-Host "Attempting to merge remote branch: $remoteBranch"
+            
+            git merge --no-commit --no-ff $remoteBranch
+            
+            if (git diff --name-only --diff-filter=U) {
+              Write-Host "Merge conflict detected with $remoteBranch. Attempting to resolve..."
+              
+              # Auto-resolve conflicts by favoring incoming changes
+              git checkout --theirs .
+              git add .
+              
+              # Commit the merge
+              git commit -m "Merged $remoteBranch into master (auto-resolved)"
+              
+              Write-Host "Conflict resolved and changes committed."
+            } else {
+              Write-Host "Successfully merged $remoteBranch into master."
+              git commit -m "Merged $remoteBranch into master"
+            }
           }
+
+          git push origin master
         shell: pwsh
 
       - name: Push changes
