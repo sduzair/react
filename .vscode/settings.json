@@ -1,0 +1,45 @@
+{
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#4fb07b",
+    "activityBar.background": "#4fb07b",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#7b4fb0",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "commandCenter.border": "#e7e7e799",
+    "sash.hoverBorder": "#4fb07b",
+    "sideBar.border": "#4fb07b",
+    "titleBar.activeBackground": "#3f8d62",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#3f8d6299",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "peacock.color": "#3f8d62",
+  "reactTsScss.codelens": false,
+  "reactTsScss.autoComplete": true,
+  "reactTsScss.definition": true,
+  "reactTsScss.peekProperties": true,
+  "reactTsScss.cssAutoComplete": false,
+  "reactTsScss.cssDefinitions": false,
+  "reactTsScss.diagnostics": true,
+  "reactTsScss.baseDir": "src",
+  "reactTsScss.cssSyntaxColor": false,
+  "reactTsScss.tsCleanUpDefs": true,
+  "reactTsScss.cleanUpDefs": [
+    "*.module.css",
+    "*.module.scss",
+    "*.module.sass",
+    "*.module.less",
+    "*.module.styl"
+  ],
+  "reactTsScss.references": true,
+  "css.styleSheets": [
+    "node_modules/bootstrap/dist/css/bootstrap.css",
+    "src/App.css"
+  ],
+  "cssvar.files": [
+    "**/*.css",
+    "node_modules/bootstrap/dist/css/bootstrap-utilities.css"
+  ],
+  "cssvar.extensions": ["css", "scss"]
+}
