@@ -1,6 +1,10 @@
+import "bootstrap/js/src/collapse.js";
+import "bootstrap/js/src/offcanvas.js";
 import { useEffect, useState } from "react";
 import "./App.css";
 import styles from "./App.module.css";
+
+import { Offcanvas } from "./Offcanvas";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -15,27 +19,38 @@ function App() {
 
   return (
     <>
+      <div className="sticky-top">
+        <div role="navigation" className="navbar bg-light">
+          <div className="container-fluid">
+            <a className="navbar-brand" href="#">
+              Navbar
+            </a>
+            <button
+              className="btn btn-primary"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasCart"
+              aria-controls="offcanvasCart"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi"
+                viewBox="0 0 16 16"
+              >
+                <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <Offcanvas />
+      </div>
       <div className="container mt-4">
         <div className="row row-cols-1 row-cols-md-3 g-4">
           {products.map((product) => (
-            <div key={product.id} className="col">
-              <div className={`card h-100 ${styles["card"]}`}>
-                <img
-                  src={product.thumbnail}
-                  className="card-img-top"
-                  alt={product.title}
-                />
-                <div className="card-body">
-                  <h5 className="card-title">{product.title}</h5>
-                  <p className="card-text">{product.description}</p>
-                </div>
-                <ul className="list-group list-group-flush">
-                  <li className="list-group-item">Price: ${product.price}</li>
-                  <li className="list-group-item">Rating: {product.rating}</li>
-                  <li className="list-group-item">Brand: {product.brand}</li>
-                </ul>
-              </div>
-            </div>
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </div>
@@ -43,14 +58,14 @@ function App() {
   );
 }
 
-interface ProductsWithPagination {
+type ProductsWithPagination = {
   products: Product[];
   total: number;
   skip: number;
   limit: number;
-}
+};
 
-interface Product {
+export type Product = {
   id: number;
   title: string;
   description: string;
@@ -73,27 +88,50 @@ interface Product {
   meta: Meta;
   images: string[];
   thumbnail: string;
-}
+};
 
-interface Meta {
+type Meta = {
   createdAt: string;
   updatedAt: string;
   barcode: string;
   qrCode: string;
-}
+};
 
-interface Review {
+type Review = {
   rating: number;
   comment: string;
   date: string;
   reviewerName: string;
   reviewerEmail: string;
-}
+};
 
-interface Dimensions {
+type Dimensions = {
   width: number;
   height: number;
   depth: number;
-}
+};
 
 export default App;
+
+function ProductCard({ product }: { product: Product }) {
+  return (
+    <div className="col">
+      <div className={`card h-100 ${styles["card"]}`}>
+        <img
+          src={product.thumbnail}
+          className="card-img-top"
+          alt={product.title}
+        />
+        <div className="card-body">
+          <h5 className="card-title">{product.title}</h5>
+          <p className="card-text">{product.description}</p>
+        </div>
+        <ul className="list-group list-group-flush">
+          <li className="list-group-item">Price: ${product.price}</li>
+          <li className="list-group-item">Rating: {product.rating}</li>
+          <li className="list-group-item">Brand: {product.brand}</li>
+        </ul>
+      </div>
+    </div>
+  );
+}
