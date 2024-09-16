@@ -4,3 +4,8 @@ body {
   background-color: var(--bs-gray-200);
   color: aliceblue;
 }
+
+.offcanvas.offcanvas-end.offcanvasCustom {
+  top: unset;
+  bottom: unset;
+}
