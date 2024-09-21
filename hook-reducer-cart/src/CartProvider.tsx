@@ -29,7 +29,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-type Cart = Pick<
+export type Cart = Pick<
   Product,
   "id" | "price" | "description" | "category" | "title"
 >[];
