@@ -5,7 +5,6 @@ body {
   color: aliceblue;
 }
 
-.offcanvas.offcanvas-end.offcanvasCustom {
-  top: unset;
-  bottom: unset;
+.offcanvas-backdrop.show {
+  opacity: 0;
 }
