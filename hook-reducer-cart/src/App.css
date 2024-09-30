@@ -1,10 +1,5 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.css";
 
-body {
-  background-color: var(--bs-gray-200);
-  color: aliceblue;
-}
-
 .offcanvas-backdrop.show {
   opacity: 0;
 }

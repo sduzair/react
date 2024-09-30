@@ -10,8 +10,8 @@ import {
 import "./App.css";
 import styles from "./App.module.css";
 
-import { formatPrice, OffcanvasCart } from "./Offcanvas";
 import { CartContext } from "./CartProvider";
+import { formatPrice, OffcanvasCart } from "./Offcanvas";
 
 function App() {
   return (
@@ -54,7 +54,7 @@ function App() {
 
 function Navbar({ children }: { children: ReactNode }) {
   return (
-    <div role="navigation" className="navbar bg-light sticky-top">
+    <div role="navigation" className="navbar bg-body sticky-top border-bottom">
       <div className="container-fluid">{children}</div>
     </div>
   );
@@ -106,8 +106,8 @@ function ProductsComponent() {
   }, []);
 
   return (
-    <div className="container mt-4">
-      <div className="row row-cols-1 row-cols-md-3 g-4">
+    <div className="container-fluid container-lg mt-4 mb-4">
+      <div className="row row-cols-auto row-cols-sm-2 row-cols-lg-4 g-2 g-lg-4">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
@@ -115,6 +115,58 @@ function ProductsComponent() {
     </div>
   );
 }
+
+function ProductCard({ product }: { product: Product }) {
+  return (
+    <div className="col">
+      <div className={`card h-100 ${styles["card"]} ${styles["card-border"]}`}>
+        <img
+          src={product.thumbnail}
+          className={`card-img-top mx-auto ${styles["card-img"]}`}
+          alt={product.title}
+        />
+        <div className="card-body">
+          <h5 className={`card-title ${styles["card-title"]}`}>
+            {product.title}
+          </h5>
+          <h6
+            className={`card-subtitle mb-2 ${styles["cart-subtitle"]}`}
+          >
+            {product.brand}
+          </h6>
+          <p className="card-text">{product.description}</p>
+        </div>
+        <ul className="list-group list-group-flush">
+          <li className="list-group-item text-end">
+            Price: {formatPrice(product.price)}
+          </li>
+          <li className="list-group-item text-end">
+            <StarRating rating={product.rating} />
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+const StarRating = ({ rating }: { rating: number }) => {
+  const stars = [];
+  const maxStars = 5;
+
+  for (let i = 1; i <= maxStars; i++) {
+    stars.push(
+      <span
+        key={i}
+        style={{ color: i <= rating ? "#ffd700" : "#e4e5e9" }}
+        className={`${styles["rating-star"]}`}
+      >
+        ★
+      </span>,
+    );
+  }
+
+  return <div>{stars}</div>;
+};
 
 type ProductsWithPagination = {
   products: Product[];
@@ -170,28 +222,3 @@ type Dimensions = {
 };
 
 export default App;
-
-function ProductCard({ product }: { product: Product }) {
-  return (
-    <div className="col">
-      <div className={`card h-100 ${styles["card"]}`}>
-        <img
-          src={product.thumbnail}
-          className="card-img-top"
-          alt={product.title}
-        />
-        <div className="card-body">
-          <h5 className="card-title">{product.title}</h5>
-          <p className="card-text">{product.description}</p>
-        </div>
-        <ul className="list-group list-group-flush">
-          <li className="list-group-item">
-            Price: {formatPrice(product.price)}
-          </li>
-          <li className="list-group-item">Rating: {product.rating}</li>
-          <li className="list-group-item">Brand: {product.brand}</li>
-        </ul>
-      </div>
-    </div>
-  );
-}
