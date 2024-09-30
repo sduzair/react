@@ -1,4 +1,18 @@
 .card {
+  --cs-card-font-size: clamp(0.625rem, 0.4rem + 1vw, 0.875rem);
+  --cs-card-title-font-size: clamp(0.875rem, 0.5rem + 1vw, 1.125rem);
+  font-size: var(--cs-card-font-size);
+}
+
+.card-title {
+  font-size: var(--cs-card-title-font-size);
+}
+
+.cart-subtitle {
+  font-size: var(--cs-card-font-size);
+}
+
+.card-border {
   &::after {
     position: absolute;
     top: calc(-1 * var(--bs-card-border-width));
@@ -20,4 +34,18 @@
   &:hover::after {
     opacity: 1;
   }
+}
+
+.card-img {
+  aspect-ratio: 4 / 3;
+}
+
+@media (max-width: 991px) {
+  .card-img {
+    max-width: 20rem;
+  }
+}
+
+.rating-star {
+  font-size: 1.750em;
 }
