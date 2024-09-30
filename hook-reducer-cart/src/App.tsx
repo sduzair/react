@@ -8,10 +8,10 @@ import {
   useState,
 } from "react";
 import "./App.css";
-import styles from "./App.module.css";
 
 import { CartContext } from "./CartProvider";
-import { formatPrice, OffcanvasCart } from "./Offcanvas";
+import { OffcanvasCart } from "./Offcanvas";
+import ProductCard from "./ProductCard/ProductCard";
 
 function App() {
   return (
@@ -54,7 +54,7 @@ function App() {
 
 function Navbar({ children }: { children: ReactNode }) {
   return (
-    <div role="navigation" className="navbar bg-light sticky-top border-bottom">
+    <div role="navigation" className="navbar bg-body sticky-top border-bottom">
       <div className="container-fluid">{children}</div>
     </div>
   );
@@ -109,68 +109,16 @@ function ProductsComponent() {
     <div className="container-fluid container-lg mt-4 mb-4">
       <div className="row row-cols-auto row-cols-sm-2 row-cols-lg-4 g-2 g-lg-4">
         {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product.id} product={product}>
+            <ProductCard.ToggleCartButton
+              product={product}
+            ></ProductCard.ToggleCartButton>
+          </ProductCard>
         ))}
       </div>
     </div>
   );
 }
-
-function ProductCard({ product }: { product: Product }) {
-  return (
-    <div className="col">
-<<<<<<< HEAD
-      <div className={`card h-100 ${styles["card"]} ${styles["card-border"]}`}>
-=======
-      <div className={`card bg-light h-100 ${styles["card"]} ${styles["card-border"]}`}>
->>>>>>> origin/hooks/hook-reducer-cart
-        <img
-          src={product.thumbnail}
-          className={`card-img-top mx-auto ${styles["card-img"]}`}
-          alt={product.title}
-        />
-        <div className="card-body">
-          <h5 className={`card-title ${styles["card-title"]}`}>
-            {product.title}
-          </h5>
-          <h6
-            className={`card-subtitle mb-2 text-body-secondary ${styles["cart-subtitle"]}`}
-          >
-            {product.brand}
-          </h6>
-          <p className="card-text">{product.description}</p>
-        </div>
-        <ul className="list-group list-group-flush">
-          <li className="list-group-item text-end">
-            Price: {formatPrice(product.price)}
-          </li>
-          <li className="list-group-item text-end">
-            <StarRating rating={product.rating} />
-          </li>
-        </ul>
-      </div>
-    </div>
-  );
-}
-
-const StarRating = ({ rating }: { rating: number }) => {
-  const stars = [];
-  const maxStars = 5;
-
-  for (let i = 1; i <= maxStars; i++) {
-    stars.push(
-      <span
-        key={i}
-        style={{ color: i <= rating ? "#ffd700" : "#e4e5e9" }}
-        className={`${styles["rating-star"]}`}
-      >
-        ★
-      </span>,
-    );
-  }
-
-  return <div>{stars}</div>;
-};
 
 type ProductsWithPagination = {
   products: Product[];

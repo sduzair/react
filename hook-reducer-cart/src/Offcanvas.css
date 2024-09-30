@@ -1,0 +1,30 @@
+.offcanvas-custom {
+  bottom: 0;
+  font-size: var(--cs-font-size);
+
+  & .offcanvas-col-names {
+    flex-grow: 0;
+    padding: var(--bs-offcanvas-padding-y) var(--bs-offcanvas-padding-x);
+  }
+
+  & .card-body-padding {
+    padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+  }
+
+  & .card-title {
+    margin-bottom: 0;
+  }
+
+  & .category {
+    text-transform: capitalize;
+  }
+}
+
+/* Check support for -webkit-fill-available */
+@supports (max-height: -webkit-fill-available) {
+  .offcanvas-custom {
+    top: unset !important;
+    bottom: unset;
+    height: -webkit-fill-available;
+  }
+}

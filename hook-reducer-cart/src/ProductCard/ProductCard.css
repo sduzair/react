@@ -1,0 +1,69 @@
+.cs-card {
+  --cs-card-title-font-size: clamp(1rem, 0.6rem + 1vw, 1.125rem);
+  --cs-card-price-font-size: clamp(1.125rem, 0.8rem + 1vw, 1.25rem);
+  --cs-card-star-font-size: clamp(1.5rem, 0.8rem + 2vw, 1.875rem);
+  font-size: var(--cs-font-size);
+
+  &::after {
+    position: absolute;
+    top: calc(-1 * var(--bs-card-border-width));
+    right: calc(-1 * var(--bs-card-border-width));
+    bottom: calc(-1 * var(--bs-card-border-width));
+    left: calc(-1 * var(--bs-card-border-width));
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 0.15s ease-in-out;
+    box-sizing: unset;
+    box-shadow: var(--bs-box-shadow-sm);
+    border: var(--bs-card-border-width) solid var(--bs-card-border-color);
+    border-radius: calc(
+      var(--bs-card-border-radius) + var(--bs-card-border-width)
+    );
+    pointer-events: none;
+    content: "";
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+
+  & .list-group {
+    border: unset;
+  }
+
+  & .list-group-item {
+    border: unset;
+    padding: 0;
+  }
+
+  & .card-title {
+    font-size: var(--cs-card-title-font-size);
+  }
+
+  & .card-subtitle {
+    font-size: var(--cs-font-size);
+  }
+
+  & .price {
+    font-weight: 500;
+    font-size: var(--cs-card-price-font-size);
+  }
+
+  & .card-img {
+    aspect-ratio: 4 / 3;
+  }
+
+  @media (max-width: 991px) {
+    & .card-img {
+      max-width: 20rem;
+    }
+  }
+
+  & .rating-star {
+    font-size: var(--cs-card-star-font-size);
+  }
+
+  & .card-footer {
+    min-height: 2.5rem;
+  }
+}

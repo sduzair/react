@@ -1,4 +1,4 @@
-import { createContext, Dispatch, Reducer, useReducer } from "react";
+import { createContext, Dispatch, Reducer, useEffect, useReducer } from "react";
 import { Product } from "./App";
 
 export const CartContext = createContext<[Cart, Dispatch<CartActionType>]>(
@@ -7,12 +7,12 @@ export const CartContext = createContext<[Cart, Dispatch<CartActionType>]>(
 
 type CartActionType =
   | { type: "ADDITEM"; payload: { cartItem: CartItem } }
-  | { type: "UPDATEITEM"; payload: { id: string; quantity: CartItem["id"] } }
+  | { type: "UPDATEITEM"; payload: { id: CartItem["id"]; quantity: number } }
   | { type: "REMOVEITEM"; payload: { itemId: CartItem["id"] } }
   | { type: "CLEAR" };
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [cart, dispatch] = useReducer<Reducer<Cart, CartActionType>>(
+  const [cart, dispatch] = useReducer<Reducer<Cart, CartActionType>, Cart>(
     (prevCart, action) => {
       switch (action.type) {
         case "ADDITEM":
@@ -37,34 +37,30 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             count: prevCart.count + action.payload.cartItem.quantity,
           };
         case "REMOVEITEM":
-          const {
-            items: { [action.payload.itemId]: _, ...updatedCart },
-            total,
-            count,
-          } = prevCart;
-
-          const removedItem = prevCart.items[action.payload.itemId];
-          return {
-            ...prevCart,
-            items: updatedCart,
-            total: total - removedItem.quantity * removedItem.price,
-            count: count - removedItem.quantity,
-          };
+          return removeItemFromCart(action.payload.itemId, prevCart);
         case "UPDATEITEM":
           const prevItem = prevCart.items[action.payload.id];
+          const newQuantity = Math.max(
+            0,
+            prevItem.quantity + action.payload.quantity,
+          );
+          const quantityDiff = newQuantity - prevItem.quantity;
+
+          if (newQuantity === 0)
+            return removeItemFromCart(action.payload.id, prevCart);
+
           return {
             ...prevCart,
             items: {
               ...prevCart.items,
               [action.payload.id]: {
                 ...prevItem,
-                quantity: prevItem.quantity + action.payload.quantity,
-                subtotal:
-                  prevItem.subtotal + action.payload.quantity * prevItem.price,
+                quantity: prevItem.quantity + quantityDiff,
+                subtotal: prevItem.subtotal + quantityDiff * prevItem.price,
               },
             },
             total: prevCart.total + action.payload.quantity * prevItem.price,
-            quatity: prevCart.total + action.payload.quantity,
+            count: prevCart.count + action.payload.quantity,
           };
         case "CLEAR":
           return { items: {}, total: 0, count: 0 };
@@ -75,61 +71,24 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           );
       }
     },
-    {
-      items: {
-        "12356": {
-          id: 12356,
-          price: 100,
-          description: "duper great product",
-          category: "Standard",
-          title: "Milk .5L",
-          quantity: 1,
-          subtotal: 100,
-          images: [
-            "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png",
-          ],
-        },
-        "1235": {
-          id: 1235,
-          price: 100,
-          description: "duper great product",
-          category: "Standard",
-          title: "Milk .5L",
-          quantity: 1,
-          subtotal: 100,
-          images: [
-            "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png",
-          ],
-        },
-        "12": {
-          id: 12,
-          price: 100,
-          description: "duper great product",
-          category: "Standard",
-          title: "Milk .5L",
-          quantity: 1,
-          subtotal: 100,
-          images: [
-            "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png",
-          ],
-        },
-        "123": {
-          id: 123,
-          price: 1000,
-          description: "Super duper great product",
-          category: "Premium",
-          title: "Milk 2L",
-          quantity: 1,
-          subtotal: 1000,
-          images: [
-            "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/thumbnail.png",
-          ],
-        },
-      },
-      total: 1300,
-      count: 4,
+    null!,
+    () => {
+      const cart = localStorage.getItem("cart");
+      if (!cart) {
+        return {
+          items: {},
+          quantity: 0,
+          count: 0,
+        };
+      }
+      return JSON.parse(cart);
     },
   );
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
   return (
     <CartContext.Provider value={[cart, dispatch]}>
       {children}
@@ -152,3 +111,19 @@ export type Cart = {
   total: number;
   count: number;
 };
+
+function removeItemFromCart(itemId: CartItem["id"], prevCart: Cart) {
+  const {
+    items: { [itemId]: _, ...updatedCart },
+    total,
+    count,
+  } = prevCart;
+
+  const removedItem = prevCart.items[itemId];
+  return {
+    ...prevCart,
+    items: updatedCart,
+    total: total - removedItem.quantity * removedItem.price,
+    count: count - removedItem.quantity,
+  };
+}

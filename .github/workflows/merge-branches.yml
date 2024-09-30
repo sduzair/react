@@ -2,8 +2,9 @@ name: Merge branches on push into master # ensure dev branches have all new file
 
 on:
   push:
-    branches:
-      - "**" # Triggers on commits to any branch
+    branches-ignore:
+      - "master"
+      - "main"
   workflow_dispatch: # Allow manual triggering
 
 permissions:
