@@ -8,7 +8,7 @@ export function OffcanvasCart({
 }: { children: ReactNode } & ComponentProps<"div">) {
   return (
     <div
-      className={`offcanvas offcanvas-end ${styles["offcanvas-custom"]}`}
+      className={`offcanvas offcanvas-end ${styles["offcanvas-custom"]} text-bg-light`}
       data-bs-scroll="true"
       tabIndex={-1}
       aria-modal="true"

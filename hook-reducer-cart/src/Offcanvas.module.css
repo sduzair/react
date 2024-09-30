@@ -11,6 +11,11 @@
   }
 }
 
+.offcanvas-col-names {
+  flex-grow: 0;
+  padding: var(--bs-offcanvas-padding-y) var(--bs-offcanvas-padding-x);
+}
+
 .card {
   --bs-card-title-color: var(--bs-body-color);
   --bs-card-subtitle-color: rgba(var(--bs-body-color-rgb), 0.75);
@@ -29,9 +34,4 @@
 .card-title {
   margin-bottom: 0;
   color: var(--bs-card-title-color);
-}
-
-.offcanvas-col-names {
-  flex-grow: 0;
-  padding: var(--bs-offcanvas-padding-y) var(--bs-offcanvas-padding-x);
 }
