@@ -42,14 +42,14 @@ function Body() {
   const [cart, dispatch] = useContext(CartContext);
   return (
     <>
-      <div className={`${styles["offcanvas-col-names"]} pt-0 pb-0`}>
+      <div className={`${styles["offcanvas-col-names"]} cs-bg py-1`}>
         <div className="row gx-1">
           <div className="col-7 fw-medium">Item</div>
           <div className="col-2 fw-medium">Qty</div>
           <div className="col-3 fw-medium">Subtotal</div>
         </div>
       </div>
-      <div className="offcanvas-body">
+      <div className="offcanvas-body pt-0 cs-bg">
         {Object.values(cart.items).map((item) => (
           <div key={item.id} className={`card ${styles["card"]} mb-3`}>
             <div className="row g-0">
