@@ -119,7 +119,11 @@ function ProductsComponent() {
 function ProductCard({ product }: { product: Product }) {
   return (
     <div className="col">
+<<<<<<< HEAD
       <div className={`card h-100 ${styles["card"]} ${styles["card-border"]}`}>
+=======
+      <div className={`card bg-light h-100 ${styles["card"]} ${styles["card-border"]}`}>
+>>>>>>> origin/hooks/hook-reducer-cart
         <img
           src={product.thumbnail}
           className={`card-img-top mx-auto ${styles["card-img"]}`}

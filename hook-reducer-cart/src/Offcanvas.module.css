@@ -33,5 +33,8 @@
 
 .card-title {
   margin-bottom: 0;
+<<<<<<< HEAD
   color: var(--bs-card-title-color);
+=======
+>>>>>>> origin/hooks/hook-reducer-cart
 }
