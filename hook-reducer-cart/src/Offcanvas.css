@@ -1,0 +1,35 @@
+.offcanvas-custom {
+  bottom: 0;
+
+  & .offcanvas-col-names {
+    flex-grow: 0;
+    padding: var(--bs-offcanvas-padding-y) var(--bs-offcanvas-padding-x);
+  }
+
+  & .card {
+    --bs-card-title-color: var(--bs-body-color);
+    --bs-card-subtitle-color: rgba(var(--bs-body-color-rgb), 0.75);
+    --bs-card-border-color: var(--bs-border-color-translucent);
+    --bs-card-cap-bg: rgba(var(--bs-body-color-rgb), 0.03);
+    --bs-card-cap-color: var(--bs-body-color);
+    --bs-card-height: auto;
+    --bs-card-color: var(--bs-body-color);
+  }
+
+  & .card-body-padding {
+    padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+  }
+
+  & .card-title {
+    margin-bottom: 0;
+  }
+}
+
+/* Check support for -webkit-fill-available */
+@supports (max-height: -webkit-fill-available) {
+  .offcanvas-custom {
+    top: unset !important;
+    bottom: unset;
+    height: -webkit-fill-available;
+  }
+}

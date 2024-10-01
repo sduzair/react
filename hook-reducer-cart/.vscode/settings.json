@@ -35,11 +35,14 @@
   "reactTsScss.references": true,
   "css.styleSheets": [
     "node_modules/bootstrap/dist/css/bootstrap.css",
-    "src/App.css"
+    "src/**/*.css"
   ],
   "cssvar.files": [
     "**/*.css",
     "node_modules/bootstrap/dist/css/bootstrap-utilities.css"
   ],
-  "cssvar.extensions": ["css", "scss"]
+  "cssvar.extensions": [
+    "css",
+    "scss"
+  ]
 }
