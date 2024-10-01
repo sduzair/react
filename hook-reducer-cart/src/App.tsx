@@ -8,10 +8,11 @@ import {
   useState,
 } from "react";
 import "./App.css";
-import styles from "./App.module.css";
+import "./ProductCard.css";
 
 import { CartContext } from "./CartProvider";
-import { formatPrice, OffcanvasCart } from "./Offcanvas";
+import { OffcanvasCart } from "./Offcanvas";
+import ProductCard from "./ProductCard";
 
 function App() {
   return (
@@ -115,58 +116,6 @@ function ProductsComponent() {
     </div>
   );
 }
-
-function ProductCard({ product }: { product: Product }) {
-  return (
-    <div className="col">
-      <div className={`card h-100 ${styles["card"]} ${styles["card-border"]}`}>
-        <img
-          src={product.thumbnail}
-          className={`card-img-top mx-auto ${styles["card-img"]}`}
-          alt={product.title}
-        />
-        <div className="card-body">
-          <h5 className={`card-title ${styles["card-title"]}`}>
-            {product.title}
-          </h5>
-          <h6
-            className={`card-subtitle mb-2 ${styles["cart-subtitle"]}`}
-          >
-            {product.brand}
-          </h6>
-          <p className="card-text">{product.description}</p>
-        </div>
-        <ul className="list-group list-group-flush">
-          <li className="list-group-item text-end">
-            Price: {formatPrice(product.price)}
-          </li>
-          <li className="list-group-item text-end">
-            <StarRating rating={product.rating} />
-          </li>
-        </ul>
-      </div>
-    </div>
-  );
-}
-
-const StarRating = ({ rating }: { rating: number }) => {
-  const stars = [];
-  const maxStars = 5;
-
-  for (let i = 1; i <= maxStars; i++) {
-    stars.push(
-      <span
-        key={i}
-        style={{ color: i <= rating ? "#ffd700" : "#e4e5e9" }}
-        className={`${styles["rating-star"]}`}
-      >
-        ★
-      </span>,
-    );
-  }
-
-  return <div>{stars}</div>;
-};
 
 type ProductsWithPagination = {
   products: Product[];

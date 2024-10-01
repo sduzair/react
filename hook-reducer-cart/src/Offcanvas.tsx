@@ -1,6 +1,7 @@
 import { ComponentProps, ReactNode, useContext } from "react";
 import { CartContext } from "./CartProvider";
-import styles from "./Offcanvas.module.css";
+import "./Offcanvas.css";
+import { formatPrice } from "./ProductCard";
 
 export function OffcanvasCart({
   children,
@@ -8,7 +9,7 @@ export function OffcanvasCart({
 }: { children: ReactNode } & ComponentProps<"div">) {
   return (
     <div
-      className={`offcanvas offcanvas-end ${styles["offcanvas-custom"]}`}
+      className="offcanvas offcanvas-end offcanvas-custom"
       data-bs-scroll="true"
       tabIndex={-1}
       aria-modal="true"
@@ -42,7 +43,7 @@ function Body() {
   const [cart, dispatch] = useContext(CartContext);
   return (
     <>
-      <div className={`${styles["offcanvas-col-names"]} py-1`}>
+      <div className="offcanvas-col-names py-1">
         <div className="row gx-1">
           <div className="col-7 fw-medium">Item</div>
           <div className="col-2 fw-medium">Qty</div>
@@ -51,7 +52,7 @@ function Body() {
       </div>
       <div className="offcanvas-body pt-0">
         {Object.values(cart.items).map((item) => (
-          <div key={item.id} className={`card ${styles["card"]} mb-3`}>
+          <div key={item.id} className="card mb-3">
             <div className="row g-0">
               <div className="col">
                 <img
@@ -62,17 +63,13 @@ function Body() {
               </div>
               <div className="col">
                 <div className="card-body d-flex flex-column h-100">
-                  <p className={`card-title ${styles["card-title"]}`}>
-                    {item.title}
-                  </p>
+                  <p className="card-title">{item.title}</p>
                   <p className="card-subtitle">{item.category}</p>
                   <p className="card-text mt-auto">{formatPrice(item.price)}</p>
                 </div>
               </div>
-              <div className={`col-2 ${styles["item-quantity"]}`}>
-                {item.quantity}
-              </div>
-              <div className={`col-3 ${styles["item-subtotal"]}`}>
+              <div className="col-2 card-body-padding">{item.quantity}</div>
+              <div className="col-3 card-body-padding">
                 {formatPrice(item.subtotal)}
               </div>
             </div>
@@ -110,11 +107,4 @@ function Body() {
       </div>
     </>
   );
-}
-
-export function formatPrice(price: number): string {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(price);
 }
