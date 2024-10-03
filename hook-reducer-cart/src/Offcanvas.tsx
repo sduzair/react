@@ -1,7 +1,7 @@
 import { ComponentProps, ReactNode, useContext } from "react";
 import { CartContext } from "./CartProvider";
 import "./Offcanvas.css";
-import { formatPrice } from "./ProductCard";
+import { formatPrice } from "./ProductCard/ProductCard";
 
 export function OffcanvasCart({
   children,
@@ -64,7 +64,7 @@ function Body() {
               <div className="col">
                 <div className="card-body d-flex flex-column h-100">
                   <p className="card-title">{item.title}</p>
-                  <p className="card-subtitle">{item.category}</p>
+                  <p className="card-subtitle category">{item.category}</p>
                   <p className="card-text mt-auto">{formatPrice(item.price)}</p>
                 </div>
               </div>
@@ -76,7 +76,7 @@ function Body() {
             <div className="row justify-content-end gx-2 m-2">
               <div className="col-auto">
                 <button
-                  className="btn btn-primary"
+                  className="btn btn-primary cs-fs"
                   onClick={() =>
                     dispatch({
                       type: "ADDITEM",
@@ -90,7 +90,7 @@ function Body() {
 
               <div className="col-auto">
                 <button
-                  className="col btn btn-danger"
+                  className="col btn btn-danger cs-fs"
                   onClick={() =>
                     dispatch({
                       type: "REMOVEITEM",
