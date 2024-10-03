@@ -1,4 +1,4 @@
-import { createContext, Dispatch, Reducer, useReducer } from "react";
+import { createContext, Dispatch, Reducer, useEffect, useReducer } from "react";
 import { Product } from "./App";
 
 export const CartContext = createContext<[Cart, Dispatch<CartActionType>]>(
@@ -12,7 +12,7 @@ type CartActionType =
   | { type: "CLEAR" };
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [cart, dispatch] = useReducer<Reducer<Cart, CartActionType>>(
+  const [cart, dispatch] = useReducer<Reducer<Cart, CartActionType>, Cart>(
     (prevCart, action) => {
       switch (action.type) {
         case "ADDITEM":
@@ -71,12 +71,24 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           );
       }
     },
-    {
-      items: {},
-      total: 0,
-      count: 0,
+    null!,
+    () => {
+      const cart = localStorage.getItem("cart");
+      if (!cart) {
+        return {
+          items: {},
+          quantity: 0,
+          count: 0,
+        };
+      }
+      return JSON.parse(cart);
     },
   );
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
   return (
     <CartContext.Provider value={[cart, dispatch]}>
       {children}
