@@ -1,0 +1,59 @@
+name: Deploy React Vite Cart Reducer App to GitHub Pages
+
+on:
+  push:
+    branches: ["hooks/hook-reducer-cart"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./hook-reducer-cart
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          package_json_file: "./hook-reducer-cart/package.json"
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4.0.4
+        with:
+          node-version-file: "./hook-reducer-cart/.node-version"
+          cache: "pnpm"
+          cache-dependency-path: "./hook-reducer-cart/pnpm-lock.yaml"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./hook-reducer-cart/dist"
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
