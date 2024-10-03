@@ -30,10 +30,15 @@ To enhance your React development experience in Visual Studio Code, instal the f
 
 ### Comparison of CSS Class Completion and Navigation Extensions
 
-| Extension                                | Official VSCode Name                         | Parses Modern CSS | Go to Definition | Peek | Autocomplete in Template Literals | Comments                                                                                   |
-| ---------------------------------------- | -------------------------------------------- | :---------------: | :--------------: | :--: | :-------------------------------: | ------------------------------------------------------------------------------------------ |
-| HTML CSS Support                         | `ecmel.vscode-html-css`                      |        ✅         |        ✅        |  ❌  |                ❌                 | Parses modern CSS, configures lint rules, but lacks peek functionality and autocomplete in template literals      |
-| CSS Class Intellisense                   | `tarrow.css-class-intellisense`              |        ✅         |        ✅        |  ❌  |                ❌                 | Parses modern CSS, but lacks peek functionality and autocomplete in template literals      |
-| CSS Navigation                           | `pucelle.vscode-css-navigation`              |        ❌         |        ✅        |  ✅  |                ✅                 | Does not parse modern CSS, but offers peek and autocomplete in template literals           |
-| HTML-Slim-SCSS-CSS Class Completion      | `gencer.html-slim-scss-css-class-completion` |        ✅         |        ❌        |  ❌  |                ❌                 | Parses modern CSS, but lacks go to definition, peek, and autocomplete in template literals |
-| IntelliSense for CSS class names in HTML | `zignd.html-css-class-completion`            |        ✅         |        ❌        |  ❌  |                ❌                 | Parses modern CSS, but lacks go to definition, peek, and autocomplete in template literals |
+| Extension                                | Official VSCode Name                         | Parses Modern CSS | Go to Definition | Peek | Autocomplete in Template Literals | Comments                                                                                                     |
+| ---------------------------------------- | -------------------------------------------- | :---------------: | :--------------: | :--: | :-------------------------------: | ------------------------------------------------------------------------------------------------------------ |
+| HTML CSS Support                         | `ecmel.vscode-html-css`                      |        ✅         |        ✅        |  ❌  |                ❌                 | Parses modern CSS, configures lint rules, but lacks peek functionality and autocomplete in template literals |
+| CSS Class Intellisense                   | `tarrow.css-class-intellisense`              |        ✅         |        ✅        |  ❌  |                ❌                 | Parses modern CSS, but lacks peek functionality and autocomplete in template literals                        |
+| CSS Navigation                           | `pucelle.vscode-css-navigation`              |        ❌         |        ✅        |  ✅  |                ✅                 | Does not parse modern CSS, but offers peek and autocomplete in template literals                             |
+| HTML-Slim-SCSS-CSS Class Completion      | `gencer.html-slim-scss-css-class-completion` |        ✅         |        ❌        |  ❌  |                ❌                 | Parses modern CSS, but lacks go to definition, peek, and autocomplete in template literals                   |
+| IntelliSense for CSS class names in HTML | `zignd.html-css-class-completion`            |        ✅         |        ❌        |  ❌  |                ❌                 | Parses modern CSS, but lacks go to definition, peek, and autocomplete in template literals                   |
+
+### TODO
+
+- [ ] Change merge strat to Subtree
+- [ ] Configure urls to be unique to branches
