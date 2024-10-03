@@ -1,8 +1,8 @@
 .cs-card {
-  --cs-card-font-size: clamp(0.625rem, 0.4rem + 1vw, 0.875rem);
-  --cs-card-title-font-size: clamp(0.875rem, 0.5rem + 1vw, 1.125rem);
-  --cs-card-price-font-size: clamp(1rem, 0.6rem + 1vw, 1.25rem);
-  font-size: var(--cs-card-font-size);
+  --cs-card-title-font-size: clamp(1rem, 0.6rem + 1vw, 1.125rem);
+  --cs-card-price-font-size: clamp(1.125rem, 0.8rem + 1vw, 1.25rem);
+  --cs-card-star-font-size: clamp(1.5rem, 0.8rem + 2vw, 1.875rem);
+  font-size: var(--cs-font-size);
 
   &::after {
     position: absolute;
@@ -33,12 +33,7 @@
 
   & .list-group-item {
     border: unset;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-
-  & .list-group-item:last-child {
-    padding-bottom: var(--bs-list-group-item-padding-y);
+    padding: 0;
   }
 
   & .card-title {
@@ -46,7 +41,7 @@
   }
 
   & .card-subtitle {
-    font-size: var(--cs-card-font-size);
+    font-size: var(--cs-font-size);
   }
 
   & .price {
@@ -65,6 +60,10 @@
   }
 
   & .rating-star {
-    font-size: 1.75em;
+    font-size: var(--cs-card-star-font-size);
+  }
+
+  & .card-footer {
+    min-height: 2.5rem;
   }
 }

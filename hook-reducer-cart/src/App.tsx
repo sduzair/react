@@ -8,11 +8,10 @@ import {
   useState,
 } from "react";
 import "./App.css";
-import "./ProductCard.css";
 
 import { CartContext } from "./CartProvider";
 import { OffcanvasCart } from "./Offcanvas";
-import ProductCard from "./ProductCard";
+import ProductCard from "./ProductCard/ProductCard";
 
 function App() {
   return (
@@ -110,7 +109,11 @@ function ProductsComponent() {
     <div className="container-fluid container-lg mt-4 mb-4">
       <div className="row row-cols-auto row-cols-sm-2 row-cols-lg-4 g-2 g-lg-4">
         {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product.id} product={product}>
+            <ProductCard.ToggleCartButton
+              product={product}
+            ></ProductCard.ToggleCartButton>
+          </ProductCard>
         ))}
       </div>
     </div>
