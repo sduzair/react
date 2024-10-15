@@ -17,9 +17,6 @@ function App() {
   return (
     <>
       <Navbar>
-        <a className="navbar-brand" href="#">
-          Navbar
-        </a>
         <Navbar.Button
           data-bs-target="#offcanvasCart"
           aria-controls="offcanvasCart"
@@ -55,7 +52,7 @@ function App() {
 function Navbar({ children }: { children: ReactNode }) {
   return (
     <div role="navigation" className="navbar bg-body sticky-top border-bottom">
-      <div className="container-fluid">{children}</div>
+      <div className="container-fluid justify-content-end">{children}</div>
     </div>
   );
 }
