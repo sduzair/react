@@ -63,7 +63,7 @@ function Navbar({ children }: { children: ReactNode }) {
 Navbar.Button = Button;
 
 function Button(props: ComponentProps<"button">) {
-  const [cart, _] = useContext(CartContext);
+  const [cart] = useContext(CartContext);
   return (
     <button
       className="btn btn-primary position-relative m-1 mx-2"

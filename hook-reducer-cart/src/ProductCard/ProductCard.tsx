@@ -2,6 +2,7 @@ import { ReactNode, useContext } from "react";
 import { Product } from "../App";
 import { CartContext } from "../CartProvider";
 import "./ProductCard.css";
+import { formatPrice } from "./utility";
 
 export default function ProductCard({
   product,
@@ -161,10 +162,3 @@ const StarRating = ({ rating }: { rating: number }) => {
 
   return <div>{stars}</div>;
 };
-
-export function formatPrice(price: number): string {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(price);
-}

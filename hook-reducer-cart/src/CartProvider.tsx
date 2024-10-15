@@ -38,7 +38,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           };
         case "REMOVEITEM":
           return removeItemFromCart(action.payload.itemId, prevCart);
-        case "UPDATEITEM":
+        case "UPDATEITEM": {
           const prevItem = prevCart.items[action.payload.id];
           const newQuantity = Math.max(
             0,
@@ -62,13 +62,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             total: prevCart.total + action.payload.quantity * prevItem.price,
             count: prevCart.count + action.payload.quantity,
           };
+        }
         case "CLEAR":
           return { items: {}, total: 0, count: 0 };
-        default:
+        default: {
           const _exhaustiveCheck: never = action;
           throw new Error(
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             `Unhandled action type: ${(_exhaustiveCheck as any).type}`,
           );
+        }
       }
     },
     null!,
@@ -114,12 +117,11 @@ export type Cart = {
 
 function removeItemFromCart(itemId: CartItem["id"], prevCart: Cart) {
   const {
-    items: { [itemId]: _, ...updatedCart },
+    items: { [itemId]: removedItem, ...updatedCart },
     total,
     count,
   } = prevCart;
 
-  const removedItem = prevCart.items[itemId];
   return {
     ...prevCart,
     items: updatedCart,
