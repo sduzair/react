@@ -82,6 +82,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           items: {},
           quantity: 0,
           count: 0,
+          total: 0,
         };
       }
       return JSON.parse(cart);
