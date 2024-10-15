@@ -1,7 +1,7 @@
 import { ComponentProps, ReactNode, useContext } from "react";
 import { CartContext } from "./CartProvider";
 import "./Offcanvas.css";
-import { formatPrice } from "./ProductCard/ProductCard";
+import { formatPrice } from "./ProductCard/utility";
 
 export function OffcanvasCart({
   children,
@@ -28,7 +28,7 @@ function Title({
   children,
   ...props
 }: { children: ReactNode } & ComponentProps<"h5">) {
-  const [cart, _] = useContext(CartContext);
+  const [cart] = useContext(CartContext);
   return (
     <div className="d-flex align-items-center justify-content-between">
       <h5 {...props}>{children}</h5>
