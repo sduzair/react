@@ -1,27 +1,19 @@
 import "bootstrap/js/src/collapse.js";
 import "bootstrap/js/src/offcanvas.js";
-import {
-  ComponentProps,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
 import "./App.css";
+import Navbar from "./Navbar";
+import { OffcanvasCart } from "./Offcanvas/Offcanvas";
+import ProductsGrid from "./ProductsGrid/ProductsGrid";
 
-import { CartContext } from "./CartProvider";
-import { OffcanvasCart } from "./Offcanvas";
-import ProductCard from "./ProductCard/ProductCard";
-
-function App() {
+export default function App() {
   return (
     <>
       <Navbar>
-        <Navbar.Button
+        <Navbar.ToggleCartButton
           data-bs-target="#offcanvasCart"
           aria-controls="offcanvasCart"
           data-bs-toggle="offcanvas"
-        ></Navbar.Button>
+        ></Navbar.ToggleCartButton>
       </Navbar>
       <OffcanvasCart id="offcanvasCart" aria-labelledby="offcanvasCartLabel">
         <div className="offcanvas-header">
@@ -30,7 +22,7 @@ function App() {
               id="offcanvasCartLabel"
               className="offcanvas-title"
             >
-              My Cart
+              <OffcanvasCart.Title.Total />
             </OffcanvasCart.Title>
           </div>
           <div className="col-auto">
@@ -44,80 +36,12 @@ function App() {
         </div>
         <OffcanvasCart.Body></OffcanvasCart.Body>
       </OffcanvasCart>
-      <ProductsComponent />
+      <ProductsGrid />
     </>
   );
 }
 
-function Navbar({ children }: { children: ReactNode }) {
-  return (
-    <div role="navigation" className="navbar bg-body sticky-top border-bottom">
-      <div className="container-fluid justify-content-end">{children}</div>
-    </div>
-  );
-}
-
-Navbar.Button = Button;
-
-function Button(props: ComponentProps<"button">) {
-  const [cart] = useContext(CartContext);
-  return (
-    <button
-      className="btn btn-primary position-relative m-1 mx-2"
-      type="button"
-      {...props}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        className="bi"
-        viewBox="0 0 16 16"
-      >
-        <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z" />
-      </svg>
-
-      <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-        {formatCountForCartBadge(cart.count)}
-        <span className="visually-hidden">unread messages</span>
-      </span>
-    </button>
-  );
-}
-
-function formatCountForCartBadge(count: number) {
-  if (count > 10) return "10+";
-  return `${count}`;
-}
-
-function ProductsComponent() {
-  const [products, setProducts] = useState<Product[]>([]);
-
-  useEffect(() => {
-    fetch("https://dummyjson.com/products")
-      .then<ProductsWithPagination>((res) => res.json())
-      .then((productsWithMetadata) => {
-        setProducts(productsWithMetadata.products);
-      });
-  }, []);
-
-  return (
-    <div className="container-fluid container-lg mt-4 mb-4">
-      <div className="row row-cols-auto row-cols-sm-2 row-cols-lg-4 g-2 g-lg-4">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product}>
-            <ProductCard.ToggleCartButton
-              product={product}
-            ></ProductCard.ToggleCartButton>
-          </ProductCard>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-type ProductsWithPagination = {
+export type ProductsWithPagination = {
   products: Product[];
   total: number;
   skip: number;
@@ -169,5 +93,3 @@ type Dimensions = {
   height: number;
   depth: number;
 };
-
-export default App;
