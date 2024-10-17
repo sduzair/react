@@ -1,13 +1,22 @@
-import { createContext, Dispatch, Reducer, useEffect, useReducer } from "react";
+import {
+  createContext,
+  Dispatch,
+  Reducer,
+  useCallback,
+  useEffect,
+  useReducer,
+} from "react";
 import { Product } from "./App";
 
-export const CartContext = createContext<[Cart, Dispatch<CartActionType>]>(
+export const CartContext = createContext<Cart>(null!);
+
+export const CartDispatchContext = createContext<Dispatch<CartActionType>>(
   null!,
 );
 
 type CartActionType =
-  | { type: "ADDITEM"; payload: { cartItem: CartItem } }
-  | { type: "UPDATEITEM"; payload: { id: CartItem["id"]; quantity: number } }
+  | { type: "ADDITEM"; payload: { cartItem: Omit<CartItem, "subtotal"> } }
+  | { type: "UPDATEITEM"; payload: { id: CartItem["id"]; qtyDelta: number } }
   | { type: "REMOVEITEM"; payload: { itemId: CartItem["id"] } }
   | { type: "CLEAR" };
 
@@ -42,7 +51,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           const prevItem = prevCart.items[action.payload.id];
           const newQuantity = Math.max(
             0,
-            prevItem.quantity + action.payload.quantity,
+            prevItem.quantity + action.payload.qtyDelta,
           );
           const quantityDiff = newQuantity - prevItem.quantity;
 
@@ -59,12 +68,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                 subtotal: prevItem.subtotal + quantityDiff * prevItem.price,
               },
             },
-            total: prevCart.total + action.payload.quantity * prevItem.price,
-            count: prevCart.count + action.payload.quantity,
+            total: prevCart.total + action.payload.qtyDelta * prevItem.price,
+            count: prevCart.count + action.payload.qtyDelta,
           };
         }
         case "CLEAR":
-          return { items: {}, total: 0, count: 0 };
+          return { items: {}, quantity: 0, total: 0, count: 0 };
         default: {
           const _exhaustiveCheck: never = action;
           throw new Error(
@@ -93,14 +102,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const dispatchMemo = useCallback(dispatch, []);
+
   return (
-    <CartContext.Provider value={[cart, dispatch]}>
-      {children}
+    <CartContext.Provider value={cart}>
+      <CartDispatchContext.Provider value={dispatchMemo}>
+        {children}
+      </CartDispatchContext.Provider>
     </CartContext.Provider>
   );
 }
 
-type CartItem = Pick<
+export type CartItem = Pick<
   Product,
   "id" | "price" | "description" | "category" | "title" | "images"
 > & {
